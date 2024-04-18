@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const userSchema = new mongoose.userSchema({
+const userSchema = new mongoose.Schema({
     userName: {
         type: String,
         required: true,
@@ -23,12 +23,7 @@ const userSchema = new mongoose.userSchema({
         unique: true,
     },
     
-    userPassword: {
-        type: String,
-        required: true,
-    },
-    
-    userPasswordConfirmation: {
+    userPasswordHash: {
         type: String,
         required: true,
     },
@@ -39,8 +34,8 @@ const userSchema = new mongoose.userSchema({
     },
 
     userAvatarUrl: String,
-
     }, 
+
     {
         timestamps: true,
     },

@@ -16,17 +16,20 @@ const PORT = config.get('port') || 5000;
 const app = express();
 app.use(express.json());
 
-// get 
+// homepage 
 app.get("/", (req, res) => {
     res.send("Home Page is loaded!");
 });
 
-// post register
+// register
 app.post("/auth/register", registerValidation, async (req, res) => {
+    // user data validation
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
         return res.status(400).json(errors.array());
     }
+    
+    // user registration
     try {
         const userPassword = req.body.userPassword;
         const salt = await bcrypt.genSalt(10);
@@ -54,11 +57,13 @@ app.post("/auth/register", registerValidation, async (req, res) => {
             expiresIn: "30d",
         });
 
+        // response
         const { userPasswordHash, ... userData } = user._doc;
         res.json({ 
             ... userData,
             token,
         });
+        
     } catch(err) {
         console.log(err);
         res.status(500).json({
@@ -67,13 +72,50 @@ app.post("/auth/register", registerValidation, async (req, res) => {
     }
 });
 
-// post login
-app.post("/auth/login", (req, res) => {
-    res.send("Log-In Page is loaded!");
-    
+// login
+app.post("/auth/login", async (req, res) => {
+    try {
+        // email check
+        const user = await userTemplate.findOne({ userEmail: req.body.userEmail });
+        if (!user) {
+            return res.status(404).json({
+                message: "Неверный логин или пароль",
+            });
+        }
+
+        // password check
+        const isValidPassword = await bcrypt.compare(req.body.userPassword, user._doc.userPasswordHash);
+        if (!isValidPassword) {
+            return res.status(400).json({
+                message: "Неверный логин или пароль",
+            });
+        }
+
+        // token
+        const token = jwt.sign({
+            _id: user._id,
+        }, 
+        "tokenCrypt",
+        {
+            expiresIn: "30d",
+        });
+
+        // response
+        const { userPasswordHash, ... userData } = user._doc;
+        res.json({ 
+            ... userData,
+            token,
+        });
+
+    } catch(err) {
+        console.log(err);
+        res.status(500).json({
+            message: "Не удалось авторизоваться",
+        });
+    }    
 });
 
-
+// start project function
 async function start() {
     try {
         await mongoose.connect(config.get('mongoUrl'), {
@@ -87,7 +129,6 @@ async function start() {
         process.exit(1);
     }
 }
-
 start();
 
 // launch express application

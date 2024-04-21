@@ -2,13 +2,11 @@
 import express from "express";
 import config from "config";
 import mongoose from "mongoose";
-import bcrypt from "bcrypt";
-import jwt from "jsonwebtoken";
 
-import { validationResult } from "express-validator";
+// import functions
 import { registerValidation } from '../validation/auth.js';
-import userTemplate from '../templates/userTemplate.js';
-import checkAuth from '../utilties/checkAuth.js';
+import checkAuth from '../utilities/checkAuth.js';
+import { register, login, getUserInfo } from '../controllers/userController.js';
 
 // defaults
 const PORT = config.get('port') || 5000;
@@ -23,123 +21,13 @@ app.get("/", (req, res) => {
 });
 
 // register
-app.post("/auth/register", registerValidation, async (req, res) => {
-    // user data validation
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-        return res.status(400).json(errors.array());
-    }
-    
-    // user registration
-    try {
-        const userPassword = req.body.userPassword;
-        const salt = await bcrypt.genSalt(10);
-        const hash = await bcrypt.hash(userPassword, salt);
-
-        const doc = new userTemplate({
-            userName: req.body.userName,
-            userSurname: req.body.userSurname,
-            userNickname: req.body.userNickname,
-            userEmail: req.body.userEmail,
-            userPasswordHash: hash,
-            userGender: req.body.userGender,
-            userAvatarUrl: req.body.userAvatarUrl
-        });
-
-        // creating user in db
-        const user = await doc.save();
-
-        // token
-        const token = jwt.sign({
-            _id: user._id,
-        }, 
-        "tokenCrypt",
-        {
-            expiresIn: "30d",
-        });
-
-        // response
-        const { userPasswordHash, ... userData } = user._doc;
-        res.json({ 
-            ... userData,
-            token,
-        });
-        
-    } catch(err) {
-        console.log(err);
-        res.status(500).json({
-            message: "Не удалось зарегистрировать пользователя",
-        });
-    }
-});
+app.post("/auth/register", registerValidation, register);
 
 // login
-app.post("/auth/login", async (req, res) => {
-    try {
-        // email check
-        const user = await userTemplate.findOne({ userEmail: req.body.userEmail });
-        if (!user) {
-            return res.status(404).json({
-                message: "Неверный логин или пароль",
-            });
-        }
-
-        // password check
-        const isValidPassword = await bcrypt.compare(req.body.userPassword, user._doc.userPasswordHash);
-        if (!isValidPassword) {
-            return res.status(400).json({
-                message: "Неверный логин или пароль",
-            });
-        }
-
-        // token
-        const token = jwt.sign({
-            _id: user._id,
-        }, 
-        "tokenCrypt",
-        {
-            expiresIn: "30d",
-        });
-
-        // response
-        const { userPasswordHash, ... userData } = user._doc;
-        res.json({ 
-            ... userData,
-            token,
-        });
-
-    } catch(err) {
-        console.log(err);
-        res.status(500).json({
-            message: "Не удалось авторизоваться",
-        });
-    }    
-});
+app.post("/auth/login", login);
 
 // user personal page
-app.get("/auth/me", checkAuth, async (req, res) => {
-    try {
-        // try to find user in DB
-        const user = await userTemplate.findById(req.userId);
-        if (!user) {
-            return res.status(404).json({
-                message: "Пользователь не найден",
-            });
-        }
-
-        // response
-        const { userPasswordHash, ... userData } = user._doc;
-        res.json({
-            userData
-        });
-        
-    } catch (err) {
-        console.log(err);
-        res.status(500).json({
-            message: "Нет доступа",
-        });
-    }
-})
+app.get("/auth/me", checkAuth, getUserInfo)
 
 // start project function
 async function start() {

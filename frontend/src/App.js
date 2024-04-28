@@ -9,7 +9,7 @@ function App() {
       <Header />
       <Container maxWidth="lg">
         <Home />
-        {/*<FullPost />*/}
+        {/* <FullPost /> */}
         {/*<AddPost />*/}
         {/*<Login />*/}
         {/*<Registration />*/}

@@ -8,23 +8,29 @@ import { registerValidation } from '../validation/auth.js';
 import checkAuth from '../utilities/checkAuth.js';
 import { register, login, getUserInfo } from '../controllers/userController.js';
 
+
 // defaults
 const PORT = config.get('port') || 5000;
+
 
 // creating express application
 const app = express();
 app.use(express.json());
 
+
 // homepage 
 app.get("/", (req, res) => {
-    res.send("Home Page is loaded!");
+    res.send("Page is loaded!");
 });
+
 
 // register
 app.post("/auth/register", registerValidation, register);
 
+
 // login
 app.post("/auth/login", login);
+
 
 // user personal page
 app.get("/auth/me", checkAuth, getUserInfo)
@@ -44,6 +50,7 @@ async function start() {
     }
 }
 start();
+
 
 // launch express application
 app.listen(PORT, (err) => {

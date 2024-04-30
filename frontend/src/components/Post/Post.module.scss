@@ -117,7 +117,7 @@ $blue: #4361ee;
 .skeleton {
   background-color: #fff;
   border: 1px solid #dedede;
-  border-radius: 6px;
+  border-radius: 8px;
   overflow: hidden;
   margin-bottom: 15px;
 
@@ -152,7 +152,15 @@ $blue: #4361ee;
   right: 15px;
   top: 15px;
   background-color: rgba(255, 255, 255, 1);
-  border-radius: 10px;
+  border-radius: 8px;
   opacity: 0;
-  transition: all 0.15s ease-in-out;
+  transition: all 0.2s ease-in-out;
+}
+
+.post-card {
+  width: 320px;
+  height: auto;
+  background-color: #fff;
+  border-radius: 16px;
+  flex-basis: 31%;
 }

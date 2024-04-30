@@ -3,7 +3,7 @@
 
 # Технологический стек:
 
-• Фронтенд: React
+• Фронтенд: React, Redux
 • Бэкенд: Node.js, Express
 • База данных: MongoDB
 

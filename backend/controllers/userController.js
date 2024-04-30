@@ -4,17 +4,14 @@ import jwt from "jsonwebtoken";
 import { validationResult } from "express-validator";
 import userTemplate from '../templates/userTemplate.js';
 
-
 // registration function
 export const register = async (req, res) => {
-
     // user data validation
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
         return res.status(400).json(errors.array());
     }
     
-
     // user registration
     try {
         const userPassword = req.body.userPassword;
@@ -31,10 +28,8 @@ export const register = async (req, res) => {
             userAvatarUrl: req.body.userAvatarUrl
         });
 
-
         // creating user in db
         const user = await doc.save();
-
 
         // token
         const token = jwt.sign({
@@ -44,7 +39,6 @@ export const register = async (req, res) => {
         {
             expiresIn: "30d",
         });
-
 
         // response
         const { userPasswordHash, ... userData } = user._doc;
@@ -61,7 +55,6 @@ export const register = async (req, res) => {
     }
 };
 
-
 // login function
 export const login = async (req, res) => {
     try {
@@ -73,7 +66,6 @@ export const login = async (req, res) => {
             });
         }
 
-
         // password check
         const isValidPassword = await bcrypt.compare(req.body.userPassword, user._doc.userPasswordHash);
         if (!isValidPassword) {
@@ -81,7 +73,6 @@ export const login = async (req, res) => {
                 message: "Неверный логин или пароль",
             });
         }
-
 
         // token
         const token = jwt.sign({
@@ -92,14 +83,12 @@ export const login = async (req, res) => {
             expiresIn: "30d",
         });
 
-
         // response
         const { userPasswordHash, ... userData } = user._doc;
         res.json({ 
             ... userData,
             token,
         });
-
 
     } catch(err) {
         console.log(err);
@@ -108,7 +97,6 @@ export const login = async (req, res) => {
         });
     }    
 };
-
 
 // about user function
 export const getUserInfo = async (req, res) => {
@@ -121,13 +109,11 @@ export const getUserInfo = async (req, res) => {
             });
         }
 
-
         // response
         const { userPasswordHash, ... userData } = user._doc;
         res.json({
             userData
         });
-        
         
     } catch (err) {
         console.log(err);

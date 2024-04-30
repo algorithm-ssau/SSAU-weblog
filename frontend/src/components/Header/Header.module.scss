@@ -33,3 +33,14 @@
     text-decoration: none;
   }
 }
+header {
+  position: sticky;
+    top: 0;
+    height: 52px;
+    background-color: rgba(255, 255, 255, 0.7);
+    backdrop-filter: saturate(200%) blur(20px);
+    -webkit-backdrop-filter: saturate(200%) blur(20px);
+    z-index: 10;
+    transition: .6s;
+    transition-delay: .6s;
+}

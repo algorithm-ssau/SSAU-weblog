@@ -1,0 +1,46 @@
+.root {
+  background-color: #fff;
+  padding: 10px 0;
+  border-bottom: 1px solid #e0e0e0;
+  margin-bottom: 30px;
+}
+.inner {
+  display: flex;
+  justify-content: space-between;
+}
+.logo {
+  background-color: black;
+  color: #fff;
+  font-weight: 700;
+  line-height: 35px;
+  text-transform: uppercase;
+  letter-spacing: 0.15px;
+  border-radius: 5px;
+  padding: 0 10px;
+  text-decoration: none;
+
+  &:hover {
+    background-color: #4361ee;
+    transition: .2s;
+  }
+}
+
+.buttons {
+  button {
+    margin-left: 10px;
+  }
+  a {
+    text-decoration: none;
+  }
+}
+header {
+  position: sticky;
+    top: 0;
+    height: 52px;
+    background-color: rgba(255, 255, 255, 0.7);
+    backdrop-filter: saturate(200%) blur(20px);
+    -webkit-backdrop-filter: saturate(200%) blur(20px);
+    z-index: 10;
+    transition: .6s;
+    transition-delay: .6s;
+}

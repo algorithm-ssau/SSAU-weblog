@@ -1,8 +1,10 @@
-# https://www.robotstxt.org/robotstxt.html
 User-agent: *
-Disallow: /admin/
-Disallow: /private/
-Disallow: /secret/
-Allow: /public/
-Allow: /index.html
+Disallow: /admin
+Disallow: /private
+Disallow: /secret_page
+
+User-agent: Googlebot
+Allow: /public_page
+Disallow: /
+
 Sitemap: https://example.com/sitemap.xml

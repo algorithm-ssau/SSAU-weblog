@@ -2,6 +2,7 @@
 import express from "express";
 import config from "config";
 import mongoose from "mongoose";
+import cors from "cors";
 
 // import functions
 import { registerValidation } from '../validation/auth.js';
@@ -9,10 +10,11 @@ import checkAuth from '../utilities/checkAuth.js';
 import { register, login, getUserInfo } from '../controllers/userController.js';
 
 // defaults
-const PORT = config.get('port') || 5000;
+const PORT = config.get('port') || 4444;
 
 // creating express application
 const app = express();
+app.use(cors());
 app.use(express.json());
 
 // homepage 

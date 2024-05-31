@@ -1,7 +1,7 @@
 .root {
   background-color: #fff;
   padding: 10px 0;
-  border-bottom: 1px solid #e0e0e0;
+  border-bottom: 1px solid #e7e7e7;
   margin-bottom: 30px;
 }
 .inner {
@@ -27,7 +27,7 @@
 
 .buttons {
   button {
-    margin-left: 10px;
+    margin-left: 8px;
   }
   a {
     text-decoration: none;
@@ -38,9 +38,9 @@ header {
     top: 0;
     height: 52px;
     background-color: rgba(255, 255, 255, 0.7);
-    backdrop-filter: saturate(200%) blur(20px);
+    backdrop-filter: saturate(200%) blur(10px);
     -webkit-backdrop-filter: saturate(200%) blur(20px);
     z-index: 10;
-    transition: .6s;
-    transition-delay: .6s;
+    transition: .5s;
+    transition-delay: .5s;
 }

@@ -3,9 +3,9 @@
 
 # Технологический стек:
 
-• Фронтенд: React, Redux;
-• Бэкенд: Node.js, Express;
-• База данных: MongoDB;
+- Фронтенд: React, Redux;
+- Бэкенд: Node.js, Express;
+- База данных: MongoDB;
 
 Сайт организован в виде нескольких разделов, каждый из которых посвящен определенной технологической теме. Разделы содержат подробные статьи, новости и ресурсы, связанные с конкретной темой.
 
@@ -19,8 +19,8 @@
 6. Откройте браузер и перейдите по адресу `http://localhost:3000`
 
 # О разработчиках
-- Суров Егор (surovegor) - frontend
-- Матвеев Виктор (ImKuroKy) - backend
-- Климов Алексей (Atechka) - frontend
-- Губанов Алексей (Alexarbuz) - backend
-- Голобурдина Дарья (GoloburdinaD) - frontend + design
+- Суров Егор (surovegor) - frontend,
+- Матвеев Виктор (ImKuroKy) - backend,
+- Климов Алексей (Atechka) - frontend,
+- Губанов Алексей (Alexarbuz) - backend,
+- Голобурдина Дарья (GoloburdinaD) - frontend + design.

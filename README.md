@@ -3,9 +3,9 @@
 
 # Технологический стек:
 
-- Фронтенд: React, Redux;
+- Фронтенд: HTML, CSS, React, Redux, Axios;
 - Бэкенд: Node.js, Express;
-- База данных: MongoDB;
+- База данных: MongoDB.
 
 # Установка и запуск:
 

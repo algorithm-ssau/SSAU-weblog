@@ -18,3 +18,15 @@ export const registerValidation = [
         return true;
     }),
 ];
+
+export const loginValidation = [
+    body('userEmail').isEmail().withMessage("Must be a valid email address"),
+    body('userPassword').isLength({ min: 8 }).withMessage("User Password must be at least 8 characters long"),
+    // Дополнительная проверка на соответствие пароля и подтверждения пароля
+    body('userPasswordConfirmation').custom((value, { req }) => {
+        if (value !== req.body.userPassword) {
+            throw new Error('Password confirmation does not match password');
+        }
+        return true;
+    }),
+];
